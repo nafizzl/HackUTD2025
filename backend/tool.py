@@ -4,11 +4,13 @@ import logging
 import httpx 
 from pydantic import BaseModel, Field
 from langchain_core.tools import tool
+from dotenv import load_dotenv
 
 _LOGGER = logging.getLogger(__name__)
 
 # --- Configuration ---
 # The key is read once at the module level (like before)
+load_dotenv()  
 AUTO_DEV_API_KEY = os.getenv("AUTO_DEV_API_KEY")
 BASE_URL = "https://api.auto.dev/listings"
 
@@ -37,10 +39,6 @@ async def search_auto_dev(
     Searches the auto.dev API for vehicle listings based on make, model, year,
     zip code, and distance. Returns a JSON string of listings.
     """
-    
-    if not AUTO_DEV_API_KEY:
-        _LOGGER.error("AUTO_DEV_API_KEY is not set.")
-        return json.dumps({"error": "Tool execution failed: API Key is not configured."})
 
     # 1. Properly apply the Bearer prefix and build headers at runtime
     headers = {

@@ -5,3 +5,4 @@ langchain-core
 langchain-nvidia-ai-endpoints
 langgraph
 pydantic
+env
